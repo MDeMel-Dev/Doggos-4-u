@@ -1,0 +1,22 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "Doggos-4-u"
+include ':app'
+include ':home-ui'
+include ':home-domain'
+include ':networking'
+include ':common-libs'
+include ':common-ui'
+include ':navigation'
