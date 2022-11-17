@@ -21,6 +21,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -91,7 +93,13 @@ fun DetailsScreen(viewModel: DetailsViewModel, navigateBack: () -> Boolean) {
         }
     } ?: Box(modifier = Modifier.fillMaxSize())
     {
-        LinearProgressIndicator(modifier = Modifier.align(Alignment.Center),
-            color = Color.Black)
+        LinearProgressIndicator(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .semantics {
+                    this.contentDescription = "Progress Bar"
+                },
+            color = Color.Black
+        )
     }
 }
