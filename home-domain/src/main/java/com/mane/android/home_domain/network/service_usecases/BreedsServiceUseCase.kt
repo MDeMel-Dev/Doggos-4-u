@@ -1,12 +1,14 @@
 package com.mane.android.home_domain.network.service_usecases
 
 import android.util.Log
+import com.mane.android.common_libs.data.ApiCallResult
 import com.mane.android.home_domain.domain_data.BreedData
 import com.mane.android.home_domain.network.response_data.DogBreed
 import com.mane.android.home_domain.network.services.BreedsService
 import com.mane.android.networking.retrofit.RetrofitBuilder
+import com.mane.android.networking.utility.ApiCaller
 
-class UseBreedsService {
+class BreedsServiceUseCase {
 
     private val breedsService : BreedsService = RetrofitBuilder.getInstance()
         .baseUrl("https://api.thedogapi.com/v1/")
@@ -33,6 +35,11 @@ class UseBreedsService {
     }
 
     suspend fun getBreeds(page: Int? = null, limit: Int? = null): List<BreedData> {
-        return mapBreedsResponseToDomainData(getBreedsResponse(page, limit))
+        return when(val response = ApiCaller.callSafely {
+            getBreedsResponse(page, limit)
+        }) {
+            is ApiCallResult.Success -> mapBreedsResponseToDomainData(response.value)
+            else -> emptyList()
+        }
     }
 }

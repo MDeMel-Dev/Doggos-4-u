@@ -5,11 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import com.mane.android.home_domain.network.service_usecases.UseBreedsService
-import kotlinx.coroutines.launch
+import com.mane.android.home_domain.domain_data.BreedData
+import com.mane.android.home_ui.compose.HomeScreen
 
 
 class HomeFragment : Fragment() {
@@ -24,22 +38,19 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
-        centerText = view.findViewById<View>(R.id.centerText) as TextView
-        return view
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        return ComposeView(requireContext()).apply {
 
-        val useBreedsService = UseBreedsService()
-        this.lifecycleScope.launch {
-            val breedDataList = useBreedsService.getBreeds()
-
-            if(breedDataList.isNotEmpty()) {
-                centerText.setText(breedDataList.first().name)
+            setViewCompositionStrategy(
+                ViewCompositionStrategy.DisposeOnLifecycleDestroyed(viewLifecycleOwner)
+            )
+            setContent {
+                MaterialTheme {
+                    HomeScreen(viewModel = viewModel)
+                }
             }
         }
     }
