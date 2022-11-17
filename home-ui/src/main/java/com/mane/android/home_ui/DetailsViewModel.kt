@@ -13,13 +13,13 @@ class DetailsViewModel : ViewModel() {
 
     private val repository = HomeRepository()
 
-    private val _breedDataList = MutableStateFlow(emptyList<BreedData>())
-    val breedDataList: StateFlow<List<BreedData>> = _breedDataList
+    private val _breedData = MutableStateFlow<BreedData?>(null)
+    val breedData: StateFlow<BreedData?> = _breedData
 
-    init {
+    fun findBreedData(id: Int) {
         viewModelScope.launch {
             repository.getBreedDataList().collectLatest {
-                _breedDataList.value = it
+                _breedData.value = it.find { it.id == id }
             }
         }
     }

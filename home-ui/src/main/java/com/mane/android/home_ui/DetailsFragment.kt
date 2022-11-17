@@ -9,6 +9,8 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.mane.android.home_ui.compose.DetailsScreen
 
 class DetailsFragment : Fragment() {
@@ -18,6 +20,11 @@ class DetailsFragment : Fragment() {
     }
 
     private lateinit var viewModel: DetailsViewModel
+    private val args: DetailsFragmentArgs by navArgs()
+
+    private val navigateBack = {
+        this.findNavController().popBackStack()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,6 +32,7 @@ class DetailsFragment : Fragment() {
     ): View {
 
         viewModel = ViewModelProvider(this).get(DetailsViewModel::class.java)
+        viewModel.findBreedData(args.breedID)
 
         return ComposeView(requireContext()).apply {
 
@@ -33,9 +41,13 @@ class DetailsFragment : Fragment() {
             )
             setContent {
                 MaterialTheme {
-                    DetailsScreen(breedID = , viewModel = viewModel)
+                    DetailsScreen(viewModel, navigateBack)
                 }
             }
         }
+    }
+
+    private fun findBreedData(id: Int) {
+        viewModel.findBreedData(id)
     }
 }

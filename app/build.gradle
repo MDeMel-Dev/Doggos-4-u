@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'androidx.navigation.safeargs'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -32,8 +34,9 @@ android {
 }
 
 dependencies {
+    def nav_version = "2.5.3"
 
-    implementation project(path: ':navigation')
+    implementation project(path: ':home-ui')
 
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
@@ -41,9 +44,21 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
     implementation 'com.google.android.material:compose-theme-adapter:1.1.16'
+
+    api "androidx.navigation:navigation-fragment:$nav_version"
+    api "androidx.navigation:navigation-ui:$nav_version"
+
+    // Kotlin
+    api "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    api "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    implementation 'com.google.dagger:dagger:2.42'
+    kapt 'com.google.dagger:dagger-compiler:2.42'
 }

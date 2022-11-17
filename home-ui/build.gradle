@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'androidx.navigation.safeargs'
 }
 
 android {
@@ -39,6 +40,8 @@ android {
 }
 
 dependencies {
+    def nav_version = "2.5.3"
+
     implementation project(path: ':home-domain')
 
     implementation 'androidx.core:core-ktx:1.9.0'
@@ -47,6 +50,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation project(path: ':common-ui')
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
@@ -64,5 +68,12 @@ dependencies {
 
     implementation 'io.coil-kt:coil-compose:2.2.0'
     implementation 'com.github.nesyou01:LazyStaggeredGrid:1.2.0'
-    implementation 'com.mxalbert.sharedelements:shared-elements:0.1.0-SNAPSHOT'
+
+    // Java language implementation
+    implementation("androidx.navigation:navigation-fragment:$nav_version")
+    implementation("androidx.navigation:navigation-ui:$nav_version")
+
+    // Kotlin
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 }

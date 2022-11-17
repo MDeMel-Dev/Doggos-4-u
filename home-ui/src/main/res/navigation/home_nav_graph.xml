@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_nav_graph"
+    app:startDestination="@id/homeFragment">
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.mane.android.home_ui.HomeFragment"
+        android:label="HomeFragment" >
+        <action android:id="@+id/action_homeFragment_to_detailsFragment"
+            app:destination="@+id/detailsFragment"
+            app:enterAnim="@anim/nav_default_pop_enter_anim"
+            app:exitAnim="@anim/nav_default_pop_exit_anim">
+            <argument
+                android:name="myArg"
+                app:argType="integer"
+                android:defaultValue="1" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.mane.android.home_ui.DetailsFragment"
+        android:label="DetailsFragment" >
+        <argument
+            android:name="breedID"
+            app:argType="integer"
+            android:defaultValue="1" />
+    </fragment>
+
+</navigation>

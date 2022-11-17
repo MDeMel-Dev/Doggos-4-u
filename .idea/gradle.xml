@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
@@ -14,7 +15,6 @@
             <option value="$PROJECT_DIR$/common-ui" />
             <option value="$PROJECT_DIR$/home-domain" />
             <option value="$PROJECT_DIR$/home-ui" />
-            <option value="$PROJECT_DIR$/navigation" />
             <option value="$PROJECT_DIR$/networking" />
           </set>
         </option>
