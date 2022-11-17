@@ -1,26 +1,21 @@
 package com.mane.android.home_ui.compose
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -29,39 +24,62 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.mane.android.home_domain.domain_data.BreedData
-import com.mane.android.home_ui.HomeViewModel
+import com.mxalbert.sharedelements.LocalSharedElementsRootScope
+import com.mxalbert.sharedelements.SharedElementsRootScope
+import com.mxalbert.sharedelements.SharedMaterialContainer
 import com.nesyou.staggeredgrid.LazyStaggeredGrid
 import com.nesyou.staggeredgrid.StaggeredCells
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel) {
+fun DogsScreen(listState: LazyListState, breedsDataListState: List<BreedData>) {
 
-    val breedsDataListState: List<BreedData> by viewModel.breedDataList.collectAsState()
+    LaunchedEffect(listState) {
+        val previousIndex = (previousSelectedDog / 2).coerceAtLeast(0)
+        if (!listState.layoutInfo.visibleItemsInfo.any { it.index == previousIndex }) {
+            listState.scrollToItem(previousIndex)
+        }
+    }
+
+    val scope = LocalSharedElementsRootScope.current
+
     Column(modifier = Modifier.fillMaxSize()) {
-        PhotoGrid(photos = breedsDataListState)
+        DogGrid(dogs = breedsDataListState, listState = listState, scope)
     }
 }
 
 @Composable
-fun PhotoGrid(photos: List<BreedData>) {
+fun DogGrid(dogs: List<BreedData>, listState: LazyListState, scope: SharedElementsRootScope?) {
     LazyStaggeredGrid(cells = StaggeredCells.Adaptive(minSize = 164.dp)) {
-        items(photos.size) { photo ->
+        items(dogs.size) { itemIndex ->
             Column(modifier = Modifier.wrapContentSize().padding(bottom = 8.dp)) {
-                Card(
-                    modifier = Modifier
-                        .wrapContentSize()
-                        .padding(start = 8.dp, end = 8.dp, top = 16.dp),
-                    shape = RoundedCornerShape(20.dp),
-                    elevation = 10.dp
-                ) {
-                    AsyncImage(
-                        model = photos[photo].imageUrl, contentDescription = null,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .wrapContentHeight()
-                    )
+                dogs[itemIndex].name?.let {
+                    SharedMaterialContainer(
+                        key = it,
+                        screenKey = "dog list",
+                        transitionSpec = MaterialFadeInTransitionSpec
+                    ) {
+                        Card(
+                            modifier = Modifier
+                                .wrapContentSize()
+                                .padding(start = 8.dp, end = 8.dp, top = 16.dp),
+                            shape = RoundedCornerShape(20.dp),
+                            elevation = 10.dp
+                        ) {
+                            if (scope != null) {
+                                AsyncImage(
+                                    model = dogs[itemIndex].imageUrl, contentDescription = null,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .wrapContentHeight()
+                                        .clickable(enabled = !scope.isRunningTransition) {
+                                            scope.changeSelectedDog(itemIndex, dogs)
+                                        }
+                                )
+                            }
+                        }
+                    }
                 }
-                photos[photo].name?.let {
+                dogs[itemIndex].name?.let {
                     Card(
                         modifier = Modifier
                             .wrapContentSize()
@@ -88,4 +106,3 @@ fun PhotoGrid(photos: List<BreedData>) {
         }
     }
 }
-
