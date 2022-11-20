@@ -1,9 +1,19 @@
 package com.mane.android.doggos_4_u.di
 
-import com.mane.android.doggos_4_u.MainActivity
+import com.mane.android.doggos_4_u.MainApplication
+import com.mane.android.home_domain.di.HomeDomainModule
+import com.mane.android.home_ui.di.HomeFragmentInjectorModule
 import dagger.Component
+import dagger.android.AndroidInjectionModule
 
-@Component
+@Component(
+    modules = [
+        AndroidInjectionModule::class,
+        MainActivityInjectorModule::class,
+        HomeFragmentInjectorModule::class,
+        HomeDomainModule::class
+    ]
+)
 interface AppComponent {
-    fun inject(app: MainActivity)
+    fun inject(app: MainApplication)
 }

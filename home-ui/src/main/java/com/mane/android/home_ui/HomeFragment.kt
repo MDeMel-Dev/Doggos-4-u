@@ -8,9 +8,10 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.mane.android.home_ui.compose.HomeScreen
+import dagger.android.support.AndroidSupportInjection
+import javax.inject.Inject
 
 
 class HomeFragment : Fragment() {
@@ -19,7 +20,9 @@ class HomeFragment : Fragment() {
         fun newInstance() = HomeFragment()
     }
 
-    private lateinit var viewModel: HomeViewModel
+    @Inject
+    lateinit var viewModel: HomeViewModel
+
     private val navigateToDetailsFragment: (Int) -> Unit = { id ->
         this.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailsFragment().setBreedID(id))
     }
@@ -28,9 +31,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-
+        AndroidSupportInjection.inject(this)
         return ComposeView(requireContext()).apply {
 
             setViewCompositionStrategy(

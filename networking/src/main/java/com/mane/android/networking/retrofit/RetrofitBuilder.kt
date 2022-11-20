@@ -2,8 +2,9 @@ package com.mane.android.networking.retrofit
 
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Inject
 
-class RetrofitBuilder {
+class RetrofitBuilder @Inject constructor() {
 
     companion object {
         fun getInstance(): Retrofit.Builder {

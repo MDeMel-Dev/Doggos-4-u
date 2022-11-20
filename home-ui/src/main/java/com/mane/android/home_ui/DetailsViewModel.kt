@@ -4,14 +4,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mane.android.home_domain.HomeRepository
 import com.mane.android.home_domain.domain_data.BreedData
+import com.mane.android.home_domain.network.service_usecases.BreedsServiceUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetailsViewModel : ViewModel() {
-
-    private val repository = HomeRepository()
+class DetailsViewModel @Inject constructor(
+    private val repository: HomeRepository
+) : ViewModel() {
 
     private val _breedData = MutableStateFlow<BreedData?>(null)
     val breedData: StateFlow<BreedData?> = _breedData

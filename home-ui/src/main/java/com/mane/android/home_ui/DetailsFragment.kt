@@ -8,10 +8,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mane.android.home_ui.compose.DetailsScreen
+import dagger.android.support.AndroidSupportInjection
+import javax.inject.Inject
 
 class DetailsFragment : Fragment() {
 
@@ -19,7 +20,8 @@ class DetailsFragment : Fragment() {
         fun newInstance() = HomeFragment()
     }
 
-    private lateinit var viewModel: DetailsViewModel
+    @Inject
+    lateinit var viewModel: DetailsViewModel
     private val args: DetailsFragmentArgs by navArgs()
 
     private val navigateBack = {
@@ -30,8 +32,7 @@ class DetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        viewModel = ViewModelProvider(this).get(DetailsViewModel::class.java)
+        AndroidSupportInjection.inject(this)
         viewModel.findBreedData(args.breedID)
 
         return ComposeView(requireContext()).apply {

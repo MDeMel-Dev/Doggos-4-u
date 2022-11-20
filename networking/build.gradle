@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -45,4 +46,9 @@ dependencies {
     api 'com.squareup.retrofit2:converter-moshi:2.9.0'
     api 'com.squareup.moshi:moshi-adapters:1.11.0'
     api 'com.squareup.moshi:moshi-kotlin:1.11.0'
+
+    implementation 'com.google.dagger:dagger:2.42'
+    implementation 'com.google.dagger:dagger-android:2.42'
+    kapt 'com.google.dagger:dagger-android-processor:2.42'
+    kapt 'com.google.dagger:dagger-compiler:2.42'
 }

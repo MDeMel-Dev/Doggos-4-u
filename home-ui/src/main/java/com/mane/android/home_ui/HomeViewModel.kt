@@ -9,10 +9,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel : ViewModel() {
-
-    private val repository = HomeRepository()
+class HomeViewModel @Inject constructor(
+    private val repository: HomeRepository
+) : ViewModel()  {
 
     private val _breedDataList = MutableStateFlow(emptyList<BreedData>())
     val breedDataList: StateFlow<List<BreedData>> = _breedDataList
