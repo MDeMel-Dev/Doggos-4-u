@@ -16,10 +16,6 @@ import javax.inject.Inject
 
 class HomeFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = HomeFragment()
-    }
-
     @Inject
     lateinit var viewModel: HomeViewModel
 

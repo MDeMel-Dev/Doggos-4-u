@@ -8,6 +8,6 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class MainActivityInjectorModule {
 
-    @ContributesAndroidInjector(modules = [HomeFragmentInjectorModule::class])
+    @ContributesAndroidInjector()
     abstract fun bindMainActivity(): MainActivity
 }

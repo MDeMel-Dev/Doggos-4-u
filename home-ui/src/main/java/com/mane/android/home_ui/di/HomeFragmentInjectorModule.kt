@@ -6,7 +6,7 @@ import com.mane.android.home_ui.HomeFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
-@Module
+@Module(includes = [HomeDomainModule::class])
 abstract class HomeFragmentInjectorModule {
 
     @ContributesAndroidInjector

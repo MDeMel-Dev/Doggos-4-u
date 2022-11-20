@@ -16,10 +16,6 @@ import javax.inject.Inject
 
 class DetailsFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = HomeFragment()
-    }
-
     @Inject
     lateinit var viewModel: DetailsViewModel
     private val args: DetailsFragmentArgs by navArgs()
