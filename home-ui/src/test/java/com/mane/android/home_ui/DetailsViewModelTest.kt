@@ -8,10 +8,16 @@ import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.observeOn
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -31,7 +37,7 @@ class DetailsViewModelTest {
     @Before
     fun setup() {
         Dispatchers.setMain(dispatcher)
-        repository = mockk(relaxed = true)
+        repository = mockk()
     }
 
     val mockBreedDataList: List<BreedData> = listOf<BreedData>(
@@ -65,12 +71,11 @@ class DetailsViewModelTest {
     @Test
     fun testFindBreedDataFunction() {
         val viewModel = DetailsViewModel(repository)
-        val channel = Channel<List<BreedData>>()
-        coEvery { repository.getBreedDataList() } returns channel.consumeAsFlow()
+        coEvery { repository.getBreedDataList() } returns flowOf(mockBreedDataList)
 
-        runTest{
-            channel.send(mockBreedDataList)
+        runTest {
             viewModel.findBreedData(3)
+            advanceUntilIdle()
             assertEquals(mockBreedDataList[1], viewModel.breedData.value)
         }
     }
