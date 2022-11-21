@@ -28,3 +28,9 @@ Objective was to create a list/detail Android application that accesses this API
 - Multi module code base with single Activity
 - Dagger Android
 - Staggered Grid on Home screen ( responsive to both Portrait and Landscape )
+- Experimented on Container transformation using jetpack compose ( Go to : https://github.com/MDeMel-Dev/Doggos-4-u/tree/Container-Transition-Compose )
+
+## Apks
+
+- https://github.com/MDeMel-Dev/Doggos-4-u/blob/master/app-main.apk
+- https://github.com/MDeMel-Dev/Doggos-4-u/blob/master/app-sharedElement-compose-variant.apk
