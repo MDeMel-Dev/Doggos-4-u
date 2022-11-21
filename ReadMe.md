@@ -17,10 +17,10 @@ Objective was to create a list/detail Android application that accesses this API
 ### About the tech stack
 
 -Android<br>
-  --Kotlin -- Gradle -- Kotlin DSL<br>
-    --Dagger --Retrofit --Coroutines & Flows<br>
-                                       -- Jetpack Compose<br>
-          -- Junit -- Mockk lib - Espresso
+&nbsp; &nbsp;--Kotlin -- Gradle -- Kotlin DSL<br>
+&nbsp; &nbsp; &nbsp; &nbsp; --Dagger --Retrofit --Coroutines & Flows<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -- Jetpack Compose<br>
+&nbsp; &nbsp; &nbsp; -- Junit -- Mockk lib - Espresso
 
 ### Notable features
 
