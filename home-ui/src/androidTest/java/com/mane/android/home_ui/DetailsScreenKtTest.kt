@@ -33,7 +33,7 @@ class DetailsScreenKtTest {
         viewModel = mockk()
         every { viewModel.breedData } returns MutableStateFlow<BreedData?>(null)
         composeTestRule.setContent {
-            DetailsScreen(viewModel, { true })
+            DetailsScreen(viewModel) { true }
         }
 
         composeTestRule.onNodeWithContentDescription("Progress Bar").assertIsDisplayed()
