@@ -5,6 +5,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.runner.AndroidJUnitRunner
+import com.mane.android.home_domain.HomeRepository
 import com.mane.android.home_domain.domain_data.BreedData
 import com.mane.android.home_ui.compose.DetailsScreen
 import io.mockk.every
@@ -18,22 +19,21 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class DetailsScreenKtTest {
 
-    lateinit var viewModel: DetailsViewModel
+    lateinit var repository: HomeRepository
 
     @get:Rule
     val composeTestRule = createComposeRule()
 
     @Before
     fun setup() {
-        viewModel = mockk()
+        repository = mockk()
     }
 
     @Test
     fun testEmptyOrNullResponse() {
-        viewModel = mockk()
-        every { viewModel.breedData } returns MutableStateFlow<BreedData?>(null)
+
         composeTestRule.setContent {
-            DetailsScreen(viewModel) { true }
+            DetailsScreen(DetailsViewModel(repository)) { true }
         }
 
         composeTestRule.onNodeWithContentDescription("Progress Bar").assertIsDisplayed()
